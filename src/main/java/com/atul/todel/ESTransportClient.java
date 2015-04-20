@@ -7,8 +7,10 @@ import java.util.Date;
 
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.node.Node;
 
 
@@ -17,21 +19,17 @@ import org.elasticsearch.node.Node;
  * @author satul
  *
  */
-public class ESAddData {
+public class ESTransportClient {
 	
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	public static void main(String[] args) throws Exception{	
 		
-		Settings settings = ImmutableSettings.builder()
-		        .put("discovery.zen.ping.multicast.enabled", "false")
-		        .put("discovery.zen.ping.unicast.hosts", "164.99.175.163:9301")
-		        .put("cluster.name", "atul.es.cluster")
-		        .build();
-			
-		// Joing the cluster as a client
-		Node node = nodeBuilder().client(true).loadConfigSettings(false).settings(settings).node();
-		Client client = node.client();
+		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "atul.es.cluster").build();
+		TransportClient transportClient = new TransportClient(settings);
+		transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress("164.99.175.163", 9300));			
+
+		Client client = (Client) transportClient;
 
 		System.out.println("Joined a cluster");
 		
@@ -40,30 +38,19 @@ public class ESAddData {
 		
 		
 		//index Data
-		IndexResponse response = client.prepareIndex("TestPartition", "event")
+		IndexResponse response = client.prepareIndex("partition_test", "event")
 		        .setSource(json)
 		        .execute()
 		        .actionGet();
 		
 		// on shutdown
-		node.close();
+		client.close();
 
-	}
-	
-	private static String getData1(){
-		String json = "{evt:A,msg:b}";
-		
-		return json;
 	}
 	
 	private static String getData(){
-		String json = "{" +
-		        "\"user\":\"kimchy\"," +
-		        "\"postDate\":\"" + format.format(new Date()) + "\"," +
-		        "\"message\":\"trying out Elasticsearch\"" +
-		    "}";
+		String json = "{\"evt\":\"a\",\"msg\":\"b\"}";
 		
 		return json;
 	}
-
 }
