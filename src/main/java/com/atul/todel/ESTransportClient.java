@@ -25,9 +25,9 @@ public class ESTransportClient {
 
 	public static void main(String[] args) throws Exception{	
 		
-		Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "atul.es.cluster").build();
-		TransportClient transportClient = new TransportClient(settings);
-		transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress("164.99.175.163", 9300));			
+		//Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "atul.es.cluster").build();
+		TransportClient transportClient = new TransportClient();
+		transportClient = transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));			
 
 		Client client = (Client) transportClient;
 
