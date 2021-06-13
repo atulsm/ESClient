@@ -14,6 +14,9 @@ public class LoginData {
     private String userlogintype;
     private Date login_date;
     private String country;
+    private String countryCode;
+    private String geoLocation;
+
 
     public LoginData(String sellerid, String userloginid, String ipaddress, String userlogintype, String login_dateStr) throws ParseException {
         this.sellerid = sellerid;
@@ -25,6 +28,8 @@ public class LoginData {
         Ip2Country ip2Country = Ip2CountryUtil.search(ipaddress);
         if(ip2Country != null){
             country = ip2Country.getCountry();
+            countryCode = ip2Country.getCountryCode();
+            geoLocation = ip2Country.getLatitude() + "," + ip2Country.getLongitude();
         }
     }
 
@@ -51,6 +56,12 @@ public class LoginData {
     public String getCountry() {
         return country;
     }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public String getGeoLocation() { return geoLocation; }
 
     @Override
     public String toString() {

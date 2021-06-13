@@ -1,5 +1,7 @@
 target/
 .settings
 .idea/
+IpToCountry_filtered.csv.gz
 IpToCountry_filtered.csv
 esclient.iml
+09b8f40fea8fc16f1d0ae0275825c27a_h3.csv

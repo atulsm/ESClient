@@ -20,7 +20,9 @@ public class Ip2CountryUtil {
     private static Ip2Country[] ip2country;
     static{
         try {
+            System.out.println("Loading ip2Country..");
             loadIpToCountry("IpToCountry_filtered.csv");
+            System.out.println("Loading ip2Country completed");
         } catch (Exception e) {
             e.printStackTrace();
         }
