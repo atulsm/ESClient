@@ -1,4 +1,4 @@
-package com.atul.es;
+package com.atul.es.basic;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
