@@ -40,6 +40,7 @@ public class ProcessCsvtoEs {
                     .field("ipaddress", loginData.getIpaddress())
                     .field("userlogintype", loginData.getUserlogintype())
                     .field("login_date", loginData.getLogin_date())
+                    .field("country", loginData.getCountry())
                     .endObject();
             IndexRequest request = new IndexRequest("logindata", "login",
                     loginData.getSellerid()+loginData.getLogin_date().getTime());
